@@ -1,7 +1,7 @@
 const bunyan = require('bunyan');
 // Load package.json
 const pjs = require('../package.json');
-
+require('dotenv').config();
 // Get some meta info from the package.json
 const { name, version } = pjs;
 
@@ -14,15 +14,13 @@ module.exports = {
     name,
     version,
     serviceTimeout: 30,
-    postgres: {
+    mysql: {
       options: {
-        host: 'localhost',
-        port: 5432,
-        database: 'dev',
-        dialect: 'postgres',
-        username: 'postgres',
-        password: 'admin',
-        logging: msg => getLogger(name, version, 'debug').info(msg),
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        dialect: 'mysql',
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD
       },
       client: null
     },

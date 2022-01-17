@@ -5,8 +5,8 @@ const UserService = require('../../services/UserService');
 const ContactService = require('../../services/ContactService');
 
 module.exports = (config) => {
-  const userService = new UserService(config.postgres.client);
-  const contactService = new ContactService(config.postgres.client);
+  const userService = new UserService(config.mysql.client);
+  const contactService = new ContactService(config.mysql.client);
 
   router.post('/create', async (req, res, next) => {
     try{

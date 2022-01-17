@@ -5,8 +5,8 @@ const UserService = require('../../services/UserService');
 const TweetService = require('../../services/TweetService');
 
 module.exports = (config) => {
-  const userService = new UserService(config.postgres.client);
-  const tweetService = new TweetService(config.postgres.client);
+  const userService = new UserService(config.mysql.client);
+  const tweetService = new TweetService(config.mysql.client);
 
   router.post('/create', async (req, res, next) => {
     try{

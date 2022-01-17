@@ -8,9 +8,9 @@ const config = require('../config')[process.env.NODE_ENV || 'development'];
 const log = config.log();
 const App = require('../app')
 
-const sequelize = new Sequelize(config.postgres.options);
+const sequelize = new Sequelize(config.mysql.options);
 
-function connectToPostgres() {
+function connectToMysql() {
   sequelize.authenticate().then(() => {
     log.info('Connection has been established successfully.');      
   }).catch((error) => {
@@ -21,8 +21,8 @@ function connectToPostgres() {
   return sequelize;
 }
 
-const postgresClient = connectToPostgres();
-config.postgres.client = postgresClient;
+const mysqlClient = connectToMysql();
+config.mysql.client = mysqlClient;
 
 const app = App(config);
 const port = process.env.PORT || "3000";
