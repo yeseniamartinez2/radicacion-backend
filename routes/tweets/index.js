@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const UserService = require('../../services/UserService');
+//const UserService = require('../../services/UserService');
 const TweetService = require('../../services/TweetService');
 
 module.exports = (config) => {
-  const userService = new UserService(config.mysql.client);
+ // const userService = new UserService(config.mysql.client);
   const tweetService = new TweetService(config.mysql.client);
 
   router.post('/create', async (req, res, next) => {
     try{
-      const user = await userService.findOneUser();
+     // const user = await userService.findOneUser();
       const tweet = await tweetService.createTweet(user.id, req.body.title, req.body.description);
       res.send({user, tweet});
     }catch(err){
