@@ -6,10 +6,11 @@ module.exports = (sequelize) => {
         titulo: DataTypes.STRING,
         medidaFile: DataTypes.BLOB,
         estado: DataTypes.ENUM('sometida', 'en_evaluacion', 'radicada'),
-        tipo: DataTypes.ENUM('P. de la C.', 'R. de la C.', 'R.C. de la C.', 'R.Conc. de la C.', 'Voto Explicativo', 'Plan de Reorganización')
+        tipo: DataTypes.ENUM('p_de_la_c', 'r_de_la_c', 'rc_de_la_c', 'r_conc_de_la_c', 'voto_explicativo', 'plan_de_reorganizacion')
         
       }
     );
+    
     const Representante = sequelize.define('Representante', { 
         nombre: DataTypes.STRING,
         inicial: DataTypes.STRING,
@@ -34,6 +35,7 @@ module.exports = (sequelize) => {
       }
     },{
       timestamps:false});
+
     Medida.belongsToMany(Representante, { through: RepresentanteMedidas });
     Representante.belongsToMany(Medida, { through: RepresentanteMedidas });
     //many-to-many => belongsToMany
@@ -119,5 +121,5 @@ module.exports = (sequelize) => {
   User.belongsToMany(User, {as: "User", foreignKey: "UserId", through: "Follow"});
   User.belongsToMany(User, {as: "Followed", foreignKey: "FollowedId", through: "Follow"});*/
 
-  sequelize.sync({alter: true}); //force: true
+  //sequelize.sync({force: true}); //force: true
 }

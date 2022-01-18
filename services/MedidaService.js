@@ -8,6 +8,15 @@ class MedidaService {
     this.models = sequelize.models;
   }
 
+  async findTipoMedida(id){
+    try {
+      const tipo = await this.models.TipoMedida.findByPk(id);
+      return tipo;
+    } catch (err) {
+      return err;
+    }
+  }
+
   async createMedida(titulo, medidaFile, estado, tipo){
     try{
       const rep = await this.models.Medida.create({
@@ -15,6 +24,8 @@ class MedidaService {
         medidaFile, 
         estado, 
         tipo
+    
+        
       });
 
       return rep

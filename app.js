@@ -2,6 +2,12 @@ const express = require('express');
 
 const app = express();
 const routes = require('./routes');
+var cors = require('cors')
+
+var corsOptions = {
+  origin: 'http://localhost:8081',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+} 
 
 module.exports = (config) => {
   const log = config.log();
@@ -16,8 +22,8 @@ module.exports = (config) => {
       return next();
     });
   }
-  
-  app.use('/', routes(config));
+  app.use(cors());
+  app.use('/', cors(corsOptions), routes(config));
   
   // eslint-disable-next-line no-unused-vars
   app.use((error, req, res, next) => {
