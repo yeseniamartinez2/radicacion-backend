@@ -43,6 +43,14 @@ class RepresentanteService {
     }
   }
 
+  async deleteRepresentante(id){
+    try {
+      const representante = await this.models.Representante.destroy({where: {id: id}});
+      return "Deleted Representante";
+    } catch (err) {
+      return err;
+    }
+  }
   
 
 }

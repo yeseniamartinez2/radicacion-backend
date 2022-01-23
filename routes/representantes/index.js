@@ -35,5 +35,14 @@ module.exports = (config) => {
     }
   });
 
+  router.delete('/:id', async (req, res) => {
+    try{
+      const representante = await representanteService.deleteRepresentante(req.params.id);
+      res.send(representante);
+    }catch(err){
+      return next(err);
+    }
+  });
+
   return router;
 };
