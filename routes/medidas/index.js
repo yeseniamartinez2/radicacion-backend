@@ -1,17 +1,49 @@
 const express = require('express');
 const router = express.Router();
-
+const multer = require('multer');
 const MedidaService = require('../../services/MedidaService');
 
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+      cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+      console.log(file);
+      cb(null , file.originalname );
+  }
+});
+
+const upload = multer({ storage: storage })
+/*const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, DIR);
+  },
+  filename: (req, file, cb) => {
+      const fileName = file.originalname.toLowerCase().split(' ').join('-');
+      cb(null, uuidv4() + '-' + fileName)
+  }
+});
+
+var upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+      if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+          cb(null, true);
+      } else {
+          cb(null, false);
+          return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+      }
+  }
+});*/
 module.exports = (config) => {
 
   const medidaService = new MedidaService(config.mysql.client);
-
-  router.post('/', async (req, res, next) => {
+  router.post('/', upload.single('medidaFile'), async (req, res, next) => {
     try{
       const medida = await medidaService.createMedida(req.body.titulo, 
-        req.body.medidaFile, req.body.estado, req.body.tipo);
+      req.body.estado, req.body.tipo, req.body.filename);
       res.send({medida});
+      console.log(req.file, req.body);
     }catch(err){
       return next(err);
     }

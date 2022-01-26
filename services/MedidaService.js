@@ -17,13 +17,15 @@ class MedidaService {
     }
   }
 
-  async createMedida(titulo, medidaFile, estado, tipo){
+ 
+
+  async createMedida(titulo, estado, tipo, filename){
     try{
       const rep = await this.models.Medida.create({
         titulo, 
-        medidaFile, 
         estado, 
-        tipo
+        tipo,
+        filename
       });
 
       return rep
@@ -31,6 +33,8 @@ class MedidaService {
       return err;
     }
   }
+
+
 
   async getAllMedidas(){
     try{

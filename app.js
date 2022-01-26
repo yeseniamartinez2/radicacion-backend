@@ -1,20 +1,20 @@
 const express = require('express');
-
 const app = express();
 const routes = require('./routes');
 var cors = require('cors')
 
 var corsOptions = {
-  origin: 'http://localhost:8081',
+  origin: 'http://localhost:8081/',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 } 
+
 
 module.exports = (config) => {
   const log = config.log();
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-
+  app.use(express.static('uploads'));
   // Add a request logging middleware in development mode
   if (app.get('env') === 'development') {
     app.use((req, res, next) => {
@@ -23,8 +23,8 @@ module.exports = (config) => {
     });
   }
   app.use(cors());
-  app.use('/', cors(corsOptions), routes(config));
-  
+  app.use('/', routes(config));
+
   // eslint-disable-next-line no-unused-vars
   app.use((error, req, res, next) => {
     res.status(error.status || 500);

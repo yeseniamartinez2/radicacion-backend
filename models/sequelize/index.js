@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     const Medida = sequelize.define('Medida', 
       { 
         titulo: DataTypes.STRING,
-        medidaFile: DataTypes.BLOB,
+        filename: DataTypes.STRING,
         estado: DataTypes.ENUM('sometida', 'en_evaluacion', 'radicada'),
         tipo: DataTypes.ENUM('p_de_la_c', 'r_de_la_c', 'rc_de_la_c', 'r_conc_de_la_c', 'voto_explicativo', 'plan_de_reorganizacion'),
         numeroAsignado: DataTypes.INTEGER
