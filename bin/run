@@ -3,12 +3,12 @@
 const http = require('http');
 const Sequelize = require('sequelize');
 
-const config = require('../config')[process.env.NODE_ENV || 'development'];
+const db_config = require('../db_config')[process.env.NODE_ENV || 'development'];
 
-const log = config.log();
+const log = db_config.log();
 const App = require('../app')
 
-const sequelize = new Sequelize(config.mysql.options);
+const sequelize = new Sequelize(db_config.mysql.options);
 
 function connectToMysql() {
   sequelize.authenticate().then(() => {
@@ -22,9 +22,9 @@ function connectToMysql() {
 }
 
 const mysqlClient = connectToMysql();
-config.mysql.client = mysqlClient;
+db_config.mysql.client = mysqlClient;
 
-const app = App(config);
+const app = App(db_config);
 const port = process.env.PORT || "3000";
 app.set("port", port);
 const server = http.createServer(app);
