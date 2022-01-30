@@ -47,30 +47,15 @@ module.exports = (config) => {
   // enable CORS (in production, modify as to allow only designated origins)
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT');
     res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
-// exposed API endpoint
-app.get('/medidas',
-    passport.authenticate('oauth-bearer', {session: false}),
-    (req, res) => {
-        console.log('Validated claims: ', req.authInfo);
-
-        // Service relies on the name claim.  
-        res.status(200).json({
-            'name': req.authInfo['name'],
-            'issued-by': req.authInfo['iss'],
-            'issued-for': req.authInfo['aud'],
-            'scope': req.authInfo['scp']
-        });
-    }
-);
- 
+  // exposed API endpoint
+  app.get('/medidas', passport.authenticate('oauth-bearer', {session: false}));
+  app.get('/representantes', passport.authenticate('oauth-bearer', {session: false}));
+    
   app.use('/', routes(config));
-
-  
-
-  
 
   
   // eslint-disable-next-line no-unused-vars
