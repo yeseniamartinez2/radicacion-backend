@@ -43,6 +43,15 @@ class RepresentanteService {
     }
   }
 
+  async findOneByEmail(email){
+    try{
+      const representante = await this.models.Representante.findOne({where: {email: email}, include: [{model: this.models.Medida}]});
+      return representante
+    }catch(err){
+      return err;
+    }
+  }
+
   async deleteRepresentante(id){
     try {
       const representante = await this.models.Representante.destroy({where: {id: id}});

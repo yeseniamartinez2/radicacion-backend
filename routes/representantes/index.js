@@ -19,8 +19,22 @@ module.exports = (config) => {
 
   router.get('/', async (req, res, next) => {
     try{
-      const representanteList = await representanteService.getAllRepresentantes();
-      res.send(representanteList);
+      
+
+        const representanteList = await representanteService.getAllRepresentantes();
+        res.send(representanteList);
+    
+      
+    }catch(err){
+      return next(err);
+    }
+  });
+
+  router.get('/email/:email', async (req, res, next) => {
+    try {
+      console.log(req);
+      const representante = await representanteService.findOneByEmail(req.params.email);
+      res.send(representante);
     }catch(err){
       return next(err);
     }

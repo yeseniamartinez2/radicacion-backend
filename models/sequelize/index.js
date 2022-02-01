@@ -15,7 +15,8 @@ module.exports = (sequelize) => {
         inicial: DataTypes.STRING,
         apellido1: DataTypes.STRING,
         apellido2: DataTypes.STRING,
-        siglas_partido: DataTypes.STRING
+        siglas_partido: DataTypes.STRING,
+        email: DataTypes.STRING
      });
     const RepresentanteMedidas = sequelize.define('RepresentanteMedidas', {
       MedidaId: {

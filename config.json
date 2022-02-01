@@ -18,5 +18,31 @@
             "endpoint": "/medidas",
             "scopes": ["access_as_user"]
         }
+    },
+    "accessMatrix": {
+        "radicarMedidas": {
+            "path": "/medidas",
+            "methods": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE"
+            ],
+            "roles": [
+                "Medida.Radicar"
+            ]
+        },
+        "someterMedidas": {
+            "path": "/medidas",
+            "methods":  [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE"
+            ],
+            "roles": [
+                "Medida.Someter"
+            ]
+        }
     }
 }

@@ -4,7 +4,7 @@ const routes = require('./routes');
 var cors = require('cors')
 const passport = require('passport');
 const msal_config = require('./config');
-
+const routeGuard = require('./routeGuard');
 const BearerStrategy = require('passport-azure-ad').BearerStrategy;
 
 const options = {
@@ -45,15 +45,21 @@ module.exports = (config) => {
     });
   }
   // enable CORS (in production, modify as to allow only designated origins)
-  app.use((req, res, next) => {
+ /* app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT');
     res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
     next();
-});
-  // exposed API endpoint
+});*/
+  app.use(cors());
+  // exposed API endpoints
   app.get('/medidas', passport.authenticate('oauth-bearer', {session: false}));
+  app.get('/medidas/:id', passport.authenticate('oauth-bearer', {session: false}));
+ // app.get('/representantes/email/:email', passport.authenticate('oauth-bearer', {session: false}));
+  app.put('/medidas/:id', passport.authenticate('oauth-bearer', {session: false}));
+  app.post('/medidas', passport.authenticate('oauth-bearer', {session: false}));
   app.get('/representantes', passport.authenticate('oauth-bearer', {session: false}));
+  app.get('/representantes/:id', passport.authenticate('oauth-bearer', {session: false}));
     
   app.use('/', routes(config));
 
