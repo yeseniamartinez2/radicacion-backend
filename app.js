@@ -55,7 +55,8 @@ module.exports = (config) => {
   // exposed API endpoints
   app.get('/medidas', passport.authenticate('oauth-bearer', {session: false}));
   app.get('/medidas/:id', passport.authenticate('oauth-bearer', {session: false}));
- // app.get('/representantes/email/:email', passport.authenticate('oauth-bearer', {session: false}));
+  app.get('/representantes/email/:email', passport.authenticate('oauth-bearer', {session: false}));
+  app.get('/medidas/email/:email', passport.authenticate('oauth-bearer', {session: false}));
   app.put('/medidas/:id', passport.authenticate('oauth-bearer', {session: false}));
   app.post('/medidas', passport.authenticate('oauth-bearer', {session: false}));
   app.get('/representantes', passport.authenticate('oauth-bearer', {session: false}));

@@ -46,6 +46,14 @@ module.exports = (config) => {
       return next(err);
     }
   });
+  router.get('/email/:email', async (req, res, next) => {
+    try{
+      const medidas = await medidaService.findByEmail(req.params.email);
+      res.send(medidas);
+    }catch(err){
+      return next(err);
+    }
+  });
 
   router.get('/autor/:aid/:mid', async (req, res) => {
     try{

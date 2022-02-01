@@ -54,6 +54,15 @@ class MedidaService {
     }
   }
 
+  async findByEmail(email){
+    try{
+      const medidas = await this.models.Medida.findAll({where: {sometidaPor: email}, include: [{model: this.models.Representante}]});
+      return medidas
+    }catch(err){
+      return err;
+    }
+  }
+
   async addAuthor(autor_id, mid){
     try {
       const medida= await this.models.Medida.findByPk(mid);
