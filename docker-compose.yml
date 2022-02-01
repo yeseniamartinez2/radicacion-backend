@@ -46,3 +46,6 @@ services:
     environment:
       DB_HOSTNAME: db
       MYSQL_ROOT_PASSWORD: c@m@r@secr3t4
+
+
+      
