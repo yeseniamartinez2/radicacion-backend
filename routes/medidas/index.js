@@ -21,7 +21,7 @@ module.exports = (config) => {
   router.post('/', upload.single('medidaFile'), async (req, res, next) => {
     try{
       const medida = await medidaService.createMedida(req.body.titulo, 
-      req.body.estado, req.body.tipo, req.body.filename);
+      req.body.estado, req.body.tipo, req.body.filename, req.body.sometidaPor);
       res.send({medida});
       console.log(req.file, req.body);
     }catch(err){
