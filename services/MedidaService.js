@@ -8,28 +8,19 @@ class MedidaService {
     this.models = sequelize.models;
   }
 
-  async findTipoMedida(id) {
+
+  async createMedida(titulo, estado, tipo, sometidaPor, filename) {
     try {
-      const tipo = await this.models.TipoMedida.findByPk(id);
-      return tipo;
-    } catch (err) {
-      return err;
-    }
-  }
-
-
-
-  async createMedida(titulo, estado, tipo, filename, sometidaPor) {
-    try {
-      const rep = await this.models.Medida.create({
+      const file = await this.models.File.create({filename});
+      const medida = await this.models.Medida.create({
         titulo,
         estado,
         tipo,
-        filename,
         sometidaPor
       });
-
-      return rep
+      medida.addFile(file);
+      
+      return medida
     } catch (err) {
       return err;
     }
@@ -39,7 +30,19 @@ class MedidaService {
 
   async getAllMedidas() {
     try {
-      const allMedidas = await this.models.Medida.findAll({ include: [{ model: this.models.Representante }] });
+      const allMedidas = await this.models.Medida.findAll({
+        include: [
+          {
+            model: this.models.File,
+            attributes: {exclude: ['updatedAt', 'createdAt', 'MedidaId', 'InformeDeComisionId', 'VotoExplicativoId']}
+          },
+          {
+            model: this.models.Representante,
+            attributes: {exclude: ['updatedAt', 'UserId']}
+          }
+        ], 
+        attributes: {exclude: ['updatedAt', 'createdAt']}
+      });
       return allMedidas
     } catch (err) {
       return err;
@@ -48,7 +51,11 @@ class MedidaService {
 
   async findOneByPk(id) {
     try {
-      const medida = await this.models.Medida.findByPk(id, { include: [{ model: this.models.Representante }] });
+      const medida = await this.models.Medida.findByPk(id, { include: [
+          {model: this.models.Representante},
+          {model: this.models.File}
+        ] }
+      );
       return medida
     } catch (err) {
       return err;

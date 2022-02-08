@@ -18,10 +18,10 @@ const upload = multer({ storage: storage });
 module.exports = (config) => {
 
   const medidaService = new MedidaService(config.mysql.client);
-  router.post('/', upload.single('medidaFile'), async (req, res, next) => {
+  router.post('/', upload.array('medidaFile'), async (req, res, next) => {
     try{
       const medida = await medidaService.createMedida(req.body.titulo, 
-      req.body.estado, req.body.tipo, req.body.filename, req.body.sometidaPor);
+      req.body.estado, req.body.tipo, req.body.sometidaPor, req.body.filename);
       res.send({medida});
       console.log(req.file, req.body);
     }catch(err){

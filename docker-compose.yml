@@ -17,6 +17,8 @@ services:
       - /opt/mysql:/var/lib/mysql
     networks:
       - cdr-radicacion-network
+    cap_add:
+      - SYS_NICE  
         
   phpmyadmin:
     depends_on:
