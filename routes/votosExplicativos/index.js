@@ -21,7 +21,7 @@ module.exports = (config) => {
   router.post('/', upload.single('votoExplicativoFile'), async (req, res, next) => {
     try{
       const votoExplicativo = await votoExplicativoService.createVotoExplicativo(req.body.titulo, 
-      req.body.estado, req.body.tipo, req.body.filename, req.body.sometidaPor);
+        req.body.estado, req.body.tipo, req.body.sometidaPor, req.body.filename);
       res.send({votoExplicativo});
       console.log(req.file, req.body);
     }catch(err){

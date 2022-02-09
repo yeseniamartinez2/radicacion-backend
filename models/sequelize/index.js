@@ -55,10 +55,10 @@ module.exports = (sequelize) => {
     VotoExplicativo.belongsToMany(Representante, { through: 'Representante_VotoExplicativo'});
     
     VotoExplicativo.belongsTo(Medida);
-    Medida.hasOne(VotoExplicativo);
+    Medida.hasMany(VotoExplicativo);
 
     InformeDeComision.belongsTo(Medida);
-    Medida.hasOne(InformeDeComision);
+    Medida.hasMany(InformeDeComision);
 
     InformeDeComision.hasMany(File);
     File.belongsTo(InformeDeComision);
@@ -70,5 +70,5 @@ module.exports = (sequelize) => {
     File.belongsTo(VotoExplicativo);
 
     // USING FORCE WILL DELETE DATA ! 
-   // sequelize.sync({force: true}); //force: true
+    //sequelize.sync({force: true}); //force: true
 }

@@ -3,6 +3,8 @@ const router = express.Router();
 
 const representantesRoute = require('./representantes');
 const medidasRoute = require('./medidas');
+const votosExplicativosRoute = require('./votosExplicativos');
+const informesDeComisionRoute = require('./informesDeComision');
 
 
 module.exports = (config) => {
@@ -13,6 +15,8 @@ module.exports = (config) => {
 
   router.use('/representantes', representantesRoute(config));
   router.use('/medidas', medidasRoute(config));
+  router.use('/votos-explicativos', votosExplicativosRoute(config));
+  router.use('/informes-de-comision', informesDeComisionRoute(config));
 
   return router;
 };

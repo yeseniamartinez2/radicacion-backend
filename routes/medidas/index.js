@@ -38,6 +38,15 @@ module.exports = (config) => {
     }
   });
 
+  router.get('/radicadas', async (req, res, next) => {
+    try{
+      const medidaList = await medidaService.getAllMedidasRadicadas();
+      res.send(medidaList);
+    }catch(err){
+      return next(err);
+    }
+  });
+
   router.get('/:id', async (req, res, next) => {
     try{
       const medida = await medidaService.findOneByPk(req.params.id);

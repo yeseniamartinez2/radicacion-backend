@@ -26,6 +26,20 @@ class MedidaService {
     }
   }
 
+  async getAllMedidasRadicadas() {
+    try {
+      const allMedidas = await this.models.Medida.findAll({
+        attributes: ['id', 'titulo', 'tipo', 'numeroAsignado'],
+        where: {
+          estado: 'radicada'
+        }
+      });
+      return allMedidas
+    } catch (err) {
+      return err;
+    }
+  }
+
 
 
   async getAllMedidas() {
@@ -40,8 +54,7 @@ class MedidaService {
             model: this.models.Representante,
             attributes: {exclude: ['updatedAt', 'UserId']}
           }
-        ], 
-        attributes: {exclude: ['updatedAt', 'createdAt']}
+        ]
       });
       return allMedidas
     } catch (err) {

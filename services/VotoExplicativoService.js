@@ -9,17 +9,20 @@ class VotoExplicativoService {
   }
 
 
-  async createVotoExplicativo(titulo, estado, tipo, filename, sometidaPor) {
+  async createVotoExplicativo(titulo, estado, tipo, sometidaPor, filename, MedidaId) {
     try {
-      const rep = await this.models.VotoExplicativo.create({
+      const file = await this.models.File.create({ filename });
+      const medida = await this.models.Medida.findByPk(MedidaId);
+      console.log(medida);
+      const votoExplicativo = await this.models.VotoExplicativo.create({
         titulo,
         estado,
         tipo,
-        filename,
         sometidaPor
       });
-
-      return rep
+      votoExplicativo.addFile(file);
+      await medida.addVotoExplicativo(votoExplicativo);
+      return votoExplicativo
     } catch (err) {
       return err;
     }
@@ -29,7 +32,10 @@ class VotoExplicativoService {
 
   async getAllVotoExplicativos() {
     try {
-      const allVotoExplicativos = await this.models.VotoExplicativo.findAll({ include: [{ model: this.models.Representante }] });
+      const allVotoExplicativos = await this.models.VotoExplicativo.findAll({ include: [
+        { model: this.models.Representante },
+        { model: this.models.Medida }
+      ] });
       return allVotoExplicativos
     } catch (err) {
       return err;
@@ -38,7 +44,10 @@ class VotoExplicativoService {
 
   async findOneByPk(id) {
     try {
-      const votoExplicativo = await this.models.VotoExplicativo.findByPk(id, { include: [{ model: this.models.Representante }] });
+      const votoExplicativo = await this.models.VotoExplicativo.findByPk(id, { include: [
+        { model: this.models.Representante },
+        { model: this.models.Medida }
+      ] });
       return votoExplicativo
     } catch (err) {
       return err;
@@ -47,7 +56,10 @@ class VotoExplicativoService {
 
   async findByEmail(email) {
     try {
-      const votoExplicativos = await this.models.VotoExplicativo.findAll({ where: { sometidaPor: email }, include: [{ model: this.models.Representante }] });
+      const votoExplicativos = await this.models.VotoExplicativo.findAll({ where: { sometidaPor: email }, include: [
+        { model: this.models.Representante },
+        { model: this.models.Medida }
+      ] });
       return votoExplicativos
     } catch (err) {
       return err;
